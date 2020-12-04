@@ -1,6 +1,6 @@
 {
   "homepage": "http://1kangyun1.github.io/react-todo-app",
-  "name": "react_crash_todo",
+  "name": "react_todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
