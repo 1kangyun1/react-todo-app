@@ -5,7 +5,7 @@ import Header from './components/layout/Header';
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import About from './components/pages/About'
-// import {v4 as uuidv4} from 'uuid';
+//import {v4 as uuidv4} from 'uuid';
 import axios from 'axios';
 
 import './App.css';
@@ -16,35 +16,37 @@ class App extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:9000/todoList')
+    axios.get('https://brian-todos.herokuapp.com/todoList')
       .then(res => this.setState({ todos: res.data }));
   }
 
   // Toggle Complete
   markComplete = (id) => {
-    this.setState({ todos: this.state.todos.map(todo => {
-      if(todo.id === id){
-        todo.completed = !todo.completed;
-      }
-      return todo;
-    }) });
+    axios.get(`https://brian-todos.herokuapp.com/todoList/${id}`)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ todos: this.state.todos.map(todo => {
+          if(todo.id === id){
+            todo.finished = !todo.finished;
+          }
+          return todo;
+        }) });
+      })
   }
 
   // Delete Todo
   delTodo = (id) => {
-    axios.delete(`http://localhost:9000/todoList/delete/${id}`)
-      .then(res => console.log(res.data))
-      //.then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }))
+    axios.delete(`https://brian-todos.herokuapp.com/todoList/delete/${id}`)
+      .then(res => this.setState({ todos: [...this.state.todos.filter(todo => todo.id !== id)] }))
   }
 
   // Add Todo
-  addTodo = (title) => {
-    axios.post('http://localhost:9000/todoList/create',{
-      title: title,
-      completed: false
+  addTodo = (todo) => {
+    axios.post('https://brian-todos.herokuapp.com/todoList/create',{
+      todo: todo,
+      finished: false
     })
-      .then(res => console.log(res.data))
-      //.then(res => this.setState({ todos: [...this.state.todos, res.data] }))
+      .then(res => this.setState({ todos: [...this.state.todos, res.data] }))
   }
 
   render() {
