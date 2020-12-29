@@ -22,7 +22,7 @@ class App extends Component {
 
   // Toggle Complete
   markComplete = (id) => {
-    axios.get(`https://brian-todos.herokuapp.com/todoList/${id}`)
+    axios.post(`https://brian-todos.herokuapp.com/todoList/${id}`)
       .then(res => {
         console.log(res.data);
         this.setState({ todos: this.state.todos.map(todo => {
